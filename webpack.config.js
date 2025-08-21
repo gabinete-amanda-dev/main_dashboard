@@ -55,6 +55,8 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = '3.38';
     })
+    .enableReactPreset()
+    .enableStimulusBridge('./assets/controllers.json')
 
     // enables Sass/SCSS support
     //.enableSassLoader()

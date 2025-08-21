@@ -4,7 +4,5 @@
 
 {% block body %}
 {# The React component will stay mounted if the div is moved in the DOM #}
-<div {{ react_component('Hello', {fullName: 'Fabien'}, {permanent: true}) }}>
-     Loading...
-</div>
+{{ render_chart(chart) }}
 {% endblock %}

@@ -18,7 +18,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@symfony/stimulus-bridge": "^4.0.1",
+        "@symfony/ux-chartjs": "^2.23.0",
         "@symfony/ux-react": "^2.29.2",
+        "@symfony/ux-turbo": "^2.29.2",
         "stimulus": "^3.2.2"
     }
 }
