@@ -15,6 +15,12 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
+    App\Service\InstagramService:
+        arguments:
+            $accessToken: '%env(INSTAGRAM_ACCESS_TOKEN)%' # Get from environment variable
+    App\Service\FacebookService:
+        arguments:
+            $accessToken: '%env(FACEBOOK_ACCESS_TOKEN)%' # Get from environment variable            
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
