@@ -15,7 +15,7 @@ final class MainDashboardController extends AbstractController
     #[Route('/main/dashboard', name: 'app_main_dashboard')]
     public function index(ChartBuilderInterface $chartBuilder): Response
     {
-        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
 
         $chart->setData([
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -30,10 +30,11 @@ final class MainDashboardController extends AbstractController
         ]);
 
         $chart->setOptions([
+            'responsive' => false,
             'scales' => [
                 'y' => [
-                    'suggestedMin' => 0,
-                    'suggestedMax' => 100,
+                    'suggestedMin' => 50,
+                    'suggestedMax' => 50,
                 ],
             ],
         ]);

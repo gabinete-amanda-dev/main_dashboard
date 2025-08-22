@@ -1,3 +1,16 @@
 body {
     background-color: #fff;
 }
+
+canvas {
+  border: 1px dotted red;
+  height: 80vh;
+  width: 80vw;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
