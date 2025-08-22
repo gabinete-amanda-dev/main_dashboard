@@ -15,6 +15,17 @@ final class MainDashboardController extends AbstractController
     #[Route('/main/dashboard', name: 'app_main_dashboard')]
     public function index(ChartBuilderInterface $chartBuilder): Response
     {
+        $user_data = [
+            'name' => 'Amanda Vetorazzo',
+            'email' => 'amanda@vetorazzo.com',
+            'redes' => [
+                'twitter' => '@amandavetorazzo',
+                'tiktok' => 'in/amandavetorazzo',
+                'youtube' => 'amandavetorazzo',
+                'instagram' => 'amandavetorazzo'
+            ],
+        ];
+
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
 
         $chart->setData([
@@ -42,6 +53,7 @@ final class MainDashboardController extends AbstractController
         return $this->render('main_dashboard/index.html.twig', [
             'controller_name' => 'MainDashboardController',
             'chart' => $chart,
+            'user_data' => $user_data,
         ]);
     }
 

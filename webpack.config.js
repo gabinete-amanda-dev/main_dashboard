@@ -58,6 +58,16 @@ Encore
     .enableReactPreset()
     .enableStimulusBridge('./assets/controllers.json')
 
+    // Enable PostCSS loader for Tailwind CSS
+    .enablePostCssLoader((options) => {
+        options.postcssOptions = {
+            plugins: {
+                tailwindcss: {},
+                autoprefixer: {},
+            }
+        }
+    })
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
