@@ -3,15 +3,10 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Entre na sua conta
-        </h2>
-    </div>
+<div class="min-h-screen bg-yellow-400 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow-sm sm:rounded-lg sm:px-10">
+    <div class=" sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="bg-white py-8 px-4 shadow-xl     sm:rounded-lg sm:px-10">
             {% if error %}
                 <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm relative">
                     <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
@@ -19,10 +14,8 @@
             {% endif %}
 
             <form method="post" class="space-y-6">
-                <div>
-                    <label for="inputEmail" class="block text-sm font-medium text-gray-700">
-                        Email
-                    </label>
+                <fieldset class="fieldset">
+                    <legend class="fieldset-legend">Email</legend>
                     <div class="mt-1">
                         <input 
                             type="email" 
@@ -32,15 +25,15 @@
                             autocomplete="email" 
                             required 
                             autofocus
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="input w-full"
                         >
                     </div>
-                </div>
+                </fielset>
 
-                <div>
-                    <label for="inputPassword" class="block text-sm font-medium text-gray-700">
+                <fieldset class="fieldset mt-2">
+                    <legend for="inputPassword" class="fieldset-legend">
                         Senha
-                    </label>
+                    </legend>
                     <div class="mt-1">
                         <input 
                             type="password" 
@@ -48,20 +41,20 @@
                             id="inputPassword" 
                             autocomplete="current-password" 
                             required
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="input w-full"
                         >
                     </div>
-                </div>
+                </fieldset>
 
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between mb-10">
                     <div class="flex items-center">
-                        <input 
-                            id="remember_me" 
-                            name="_remember_me" 
-                            type="checkbox" 
-                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm"
-                        >
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                        <label for="remember_me" class="label">
+                            <input 
+                                id="remember_me" 
+                                name="_remember_me" 
+                                type="checkbox" 
+                                class="checkbox"
+                            >
                             Lembrar de mim
                         </label>
                     </div>
@@ -70,7 +63,7 @@
                 <div>
                     <button 
                         type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+                        class="btn btn-primary w-full"
                     >
                         Entrar
                     </button>
