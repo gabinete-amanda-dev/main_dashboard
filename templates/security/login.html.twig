@@ -11,9 +11,9 @@
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div class="bg-white py-8 px-4 shadow-sm sm:rounded-lg sm:px-10">
             {% if error %}
-                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative">
+                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm relative">
                     <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
                 </div>
             {% endif %}
@@ -32,7 +32,7 @@
                             autocomplete="email" 
                             required 
                             autofocus
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             id="inputPassword" 
                             autocomplete="current-password" 
                             required
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-hidden focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             id="remember_me" 
                             name="_remember_me" 
                             type="checkbox" 
-                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm"
                         >
                         <label for="remember_me" class="ml-2 block text-sm text-gray-900">
                             Lembrar de mim
@@ -70,7 +70,7 @@
                 <div>
                     <button 
                         type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
                     >
                         Entrar
                     </button>

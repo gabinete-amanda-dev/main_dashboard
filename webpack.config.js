@@ -62,10 +62,12 @@ Encore
     .enablePostCssLoader((options) => {
         options.postcssOptions = {
             plugins: {
-                tailwindcss: {},
-                autoprefixer: {},
+                '@tailwindcss/postcss': {},
             }
         }
+    })
+    .configureWatchOptions((w) => {
+        w.ignored = /node_modules|public\/build|\.git|\.cache|\.tailwindcss/;
     })
 
     // enables Sass/SCSS support
@@ -84,5 +86,9 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
 ;
+
+if (Encore.isProduction()) {
+    Encore.cleanupOutputBeforeBuild();
+}
 
 module.exports = Encore.getWebpackConfig();
