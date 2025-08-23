@@ -22,5 +22,11 @@ services:
         arguments:
             $accessToken: '%env(FACEBOOK_ACCESS_TOKEN)%' # Get from environment variable            
 
+    App\EventListener\ExceptionListener:
+        # arguments:
+        #     $debug: '%kernel.debug%'
+        tags:
+            - { name: kernel.event_subscriber }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
