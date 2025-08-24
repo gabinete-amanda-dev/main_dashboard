@@ -17,7 +17,7 @@ final class DashboardController extends AbstractController
     {
         $user = $this->getUser();
         // Carrega JSON mock (exemplo)
-        $jsonPath = $this->getParameter('kernel.project_dir') . '/config/mock/social.json';
+        $jsonPath = $this->getParameter('kernel.project_dir') . '/config/mock/social_overview.json';
         $data = json_decode(file_get_contents($jsonPath), true);
 
         // Redes
