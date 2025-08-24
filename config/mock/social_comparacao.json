@@ -1,0 +1,42 @@
+{
+  "date": "2025-08-23",
+  "profile": { "name": "João Silva", "role": "Membro do MBL" },
+
+  "networks": {
+    "tiktok":    { "followers": 96000, "views": 99000, "engagement_total": 18300, "posts_today": 2 },
+    "instagram": { "followers": 81000, "views": 62000, "engagement_total":  9700, "posts_today": 1 },
+    "youtube":   { "followers": 36000, "views": 23000, "engagement_total":  4040, "posts_today": 1 },
+    "kwai":      { "followers": 10500, "views":  5500, "engagement_total":  1420, "posts_today": 0 }
+  },
+
+  "comparisons": {
+    "engagement_distribution_pct": { "tiktok": 50, "instagram": 34, "youtube": 13, "kwai": 3 },
+
+    "efficiency_index": {                
+      "tiktok": 185.0,
+      "instagram": 156.0,
+      "youtube": 176.0,
+      "kwai": 258.0
+    },
+
+    "roi_effort": {                      
+      "instagram": 9700,
+      "youtube": 4040,
+      "kwai": null
+    },
+
+    "relative_growth": [                 
+      { "date": "2025-08-19", "tiktok": 100, "instagram": 100, "youtube": 100, "kwai": 100 },
+      { "date": "2025-08-20", "tiktok": 100.53, "instagram": 100.38, "youtube": 100.57, "kwai": 100.50 },
+      { "date": "2025-08-21", "tiktok": 101.06, "instagram": 100.63, "youtube": 101.43, "kwai": 102.00 },
+      { "date": "2025-08-22", "tiktok": 101.60, "instagram": 101.26, "youtube": 102.29, "kwai": 103.00 },
+      { "date": "2025-08-23", "tiktok": 102.13, "instagram": 101.89, "youtube": 102.86, "kwai": 105.00 }
+    ]
+  },
+
+  "peers": [
+    { "name": "Maria Souza", "network": "Instagram", "followers": 92000,  "engagement_rate_pct": 3.2, "avg_views": 68000 },
+    { "name": "Pedro Lima",  "network": "TikTok",    "followers": 110000, "engagement_rate_pct": 4.5, "avg_views": 95000 },
+    { "name": "Ana Paula",   "network": "YouTube",   "followers": 54000,  "engagement_rate_pct": 2.8, "avg_views": 32000 }
+  ]
+}

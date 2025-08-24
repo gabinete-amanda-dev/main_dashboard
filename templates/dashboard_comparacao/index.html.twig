@@ -1,0 +1,80 @@
+{% extends 'base.dashboard.html.twig' %}
+
+{% block title %}Dashboard – Comparação{% endblock %}
+
+{% block content %} 
+<section class="space-y-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Distribuição do Engajamento (%)</h2>
+        <div class="mt-2">
+          {{ render_chart(distDonut) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Eficiência por Rede (Views × Índice; raio = Seguidores)</h2>
+        <div class="mt-2">
+          {{ render_chart(efficiencyBubble) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">ROI de Esforço (Engajamento por Post)</h2>
+        <div class="mt-2">
+          {{ render_chart(roiBar) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Crescimento Relativo (base=100)</h2>
+        <div class="mt-2">
+          {{ render_chart(growthLine) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-200 shadow">
+    <div class="card-body p-4">
+      <h2 class="card-title">Benchmark com Pares</h2>
+
+      <div class="overflow-x-auto mt-2">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Rede</th>
+              <th class="text-right">Seguidores</th>
+              <th class="text-right">Engajamento %</th>
+              <th class="text-right">Views Médias</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in peers %}
+              <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ p.network }}</td>
+                <td class="text-right">{{ p.followers|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.engagement_rate_pct|number_format(1, ',', '.') }}%</td>
+                <td class="text-right">{{ p.avg_views|number_format(0, ',', '.') }}</td>
+              </tr>
+            {% else %}
+              <tr><td colspan="5" class="text-center opacity-70">Sem dados de benchmark.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

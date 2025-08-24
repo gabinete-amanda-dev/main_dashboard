@@ -41,9 +41,9 @@
          class="tab {% if app.request.get('_route') == 'app_dashboard_conteudo' %}tab-active{% endif %}">
         Conteudo
       </a>
-      <a href=""
+      <a href="{{ path('app_dashboard_comparacao') }}"
          role="tab"
-         class="tab {% if app.request.get('_route') == 'dashboard_comparacao' %}tab-active{% endif %}">
+         class="tab {% if app.request.get('_route') == 'app_dashboard_comparacao' %}tab-active{% endif %}">
         Comparação
       </a>
     </div>
