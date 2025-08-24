@@ -36,10 +36,10 @@
          class="tab {% if app.request.get('_route') == 'app_dashboard_audiencia' %}tab-active{% endif %}">
         Audiência
       </a>
-      <a href=""
+      <a href="{{ path('app_dashboard_conteudo') }}"
          role="tab"
-         class="tab {% if app.request.get('_route') == 'dashboard_conteudo' %}tab-active{% endif %}">
-        Conteúdo
+         class="tab {% if app.request.get('_route') == 'app_dashboard_conteudo' %}tab-active{% endif %}">
+        Conteudo
       </a>
       <a href=""
          role="tab"

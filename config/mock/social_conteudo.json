@@ -1,0 +1,108 @@
+{
+  "date": "2025-08-23",
+  "profile": { "name": "João Silva", "role": "Membro do MBL" },
+
+  "content": {
+    "recent_posts": [
+      {
+        "network": "tiktok",
+        "id": "tt_003",
+        "title": "Bastidores do evento",
+        "theme": "Eventos",
+        "views": 18500,
+        "likes": 2900,
+        "comments": 600,
+        "shares": 520,
+        "saves": 120,
+        "posted_at": "2025-08-22T18:40:00-03:00"
+      },
+      {
+        "network": "instagram",
+        "id": "ig_002",
+        "title": "Debate sobre economia em universidade",
+        "theme": "Economia",
+        "views": 20400,
+        "likes": 3550,
+        "comments": 820,
+        "shares": 630,
+        "saves": 260,
+        "posted_at": "2025-08-21T14:00:00-03:00"
+      },
+      {
+        "network": "youtube",
+        "id": "yt_000",
+        "title": "Clipes: debate sobre corrupção",
+        "theme": "Corrupção",
+        "views": 9800,
+        "likes": 1100,
+        "comments": 210,
+        "shares": 160,
+        "saves": 40,
+        "posted_at": "2025-08-20T20:10:00-03:00"
+      },
+      {
+        "network": "tiktok",
+        "id": "tt_004",
+        "title": "Trend com mensagem política",
+        "theme": "Política",
+        "views": 24000,
+        "likes": 3900,
+        "comments": 780,
+        "shares": 710,
+        "saves": 180,
+        "posted_at": "2025-08-23T12:30:00-03:00"
+      },
+      {
+        "network": "instagram",
+        "id": "ig_003",
+        "title": "Carrossel: propostas de reformas",
+        "theme": "Reformas",
+        "views": 17000,
+        "likes": 2800,
+        "comments": 640,
+        "shares": 520,
+        "saves": 300,
+        "posted_at": "2025-08-23T10:05:00-03:00"
+      },
+      {
+        "network": "youtube",
+        "id": "yt_001",
+        "title": "Podcast completo: reformas e futuro do país",
+        "theme": "Reformas",
+        "views": 15800,
+        "likes": 1870,
+        "comments": 360,
+        "shares": 260,
+        "saves": 65,
+        "posted_at": "2025-08-23T07:50:00-03:00"
+      }
+    ],
+
+    "themes_breakdown": {
+      "Economia": 48200,
+      "Política": 39750,
+      "Reformas": 18800,
+      "Eventos": 25500,
+      "Corrupção": 14300
+    },
+
+    "last_posts_timeline": [
+      { "id": "tt_004", "title": "Trend...", "views": 24000, "posted_at": "2025-08-23T12:30:00-03:00" },
+      { "id": "ig_003", "title": "Carrossel...", "views": 17000, "posted_at": "2025-08-23T10:05:00-03:00" },
+      { "id": "yt_001", "title": "Podcast completo...", "views": 15800, "posted_at": "2025-08-23T07:50:00-03:00" },
+      { "id": "tt_003", "title": "Bastidores...", "views": 18500, "posted_at": "2025-08-22T18:40:00-03:00" },
+      { "id": "ig_002", "title": "Debate economia...", "views": 20400, "posted_at": "2025-08-21T14:00:00-03:00" },
+      { "id": "yt_000", "title": "Clipes corrupção...", "views": 9800,  "posted_at": "2025-08-20T20:10:00-03:00" }
+    ],
+
+    "best_posting_hours": {
+      "avg_engagement_by_hour": {
+        "0": 120, "1": 95, "2": 80, "3": 60, "4": 50, "5": 70, "6": 110, "7": 180, "8": 260, "9": 340, "10": 420, "11": 480,
+        "12": 520, "13": 500, "14": 540, "15": 560, "16": 530, "17": 600, "18": 680, "19": 720, "20": 760, "21": 700, "22": 560, "23": 400
+      },
+      "avg_engagement_by_weekday": {
+        "Dom": 520, "Seg": 680, "Ter": 740, "Qua": 710, "Qui": 780, "Sex": 820, "Sáb": 760
+      }
+    }
+  }
+}

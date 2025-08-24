@@ -1,0 +1,109 @@
+{% extends 'base.dashboard.html.twig' %}
+
+{% block title %}Dashboard – Conteúdo{% endblock %}
+
+{% block content %} 
+<section class="space-y-6">
+
+  {# --- Top Posts (tabela) --- #}
+  <div class="card bg-base-200 shadow">
+    <div class="card-body p-4">
+      <div class="flex items-center justify-between">
+        <h2 class="card-title">Top Posts</h2>
+        <div class="join hidden md:flex">
+          <button class="btn btn-sm join-item btn-ghost">Hoje</button>
+          <button class="btn btn-sm join-item btn-ghost">7 dias</button>
+          <button class="btn btn-sm join-item btn-ghost">30 dias</button>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto mt-2">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Rede</th>
+              <th>Título</th>
+              <th>Tema</th>
+              <th class="text-right">Views</th>
+              <th class="text-right">Likes</th>
+              <th class="text-right">Comentários</th>
+              <th class="text-right">Compart.</th>
+              <th class="text-right">Salvos</th>
+              <th class="text-right">Publicado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in topPosts %}
+              <tr>
+                <td>{{ p.network|capitalize }}</td>
+                <td class="max-w-[24rem] truncate" title="{{ p.title }}">{{ p.title }}</td>
+                <td>{{ p.theme }}</td>
+                <td class="text-right">{{ p.views|default(0)|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.likes|default(0)|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.comments|default(0)|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.shares|default(0)|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.saves|default(0)|number_format(0, ',', '.') }}</td>
+                <td class="text-right">{{ p.posted_at|date('d/m H:i') }}</td>
+              </tr>
+            {% else %}
+              <tr><td colspan="9" class="text-center opacity-70">Sem posts no período.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {# --- Scatter (Eficiência) & Temas --- #}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Eficiência por Post (Likes vs Views)</h2>
+        <div class="mt-2">
+          {{ render_chart(efficiencyScatter) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Engajamento por Tema</h2>
+        <div class="mt-2">
+          {{ render_chart(themesBar) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# --- Linha (timeline) & Melhores horários --- #}
+  <div class="card bg-base-200 shadow">
+    <div class="card-body p-4">
+      <h2 class="card-title">Desempenho dos Últimos Posts</h2>
+      <div class="mt-2">
+        {{ render_chart(postsLine) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Melhores Horários (por Hora)</h2>
+        <div class="mt-2">
+          {{ render_chart(hoursBar) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-200 shadow">
+      <div class="card-body p-4">
+        <h2 class="card-title">Melhores Dias (por Semana)</h2>
+        <div class="mt-2">
+          {{ render_chart(weekdaysBar) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+{% endblock %}

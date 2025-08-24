@@ -42,7 +42,7 @@ security:
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/dashboard/engajamento, roles: ROLE_USER }
         - { path: ^/dashboard/audiencia, roles: ROLE_USER }
-        
+        - { path: ^/dashboard/conteudo, roles: ROLE_USER }
 
 when@test:
     security:
