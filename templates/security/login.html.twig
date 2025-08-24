@@ -2,76 +2,136 @@
 
 {% block title %}Login{% endblock %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    @keyframes float-x {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(40px); }
+    }
+
+    @keyframes rise-up {
+      0%   { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* entrada vinda da esquerda */
+    @keyframes cloud-in-left {
+      0%   { transform: translateX(-40vw); opacity: 0 }
+      100% { transform: translateX(0);     opacity: 1 }
+    }
+
+    /* entrada vinda da direita */
+    @keyframes cloud-in-right {
+      0%   { transform: translateX(40vw); opacity: 0 }
+      100% { transform: translateX(0);    opacity: 1 }
+    }
+  </style>
+{% endblock %}
+
 {% block body %}
-<div class="min-h-screen bg-yellow-400 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="relative min-h-screen bg-[#f7c300] overflow-hidden flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 
-    <div class=" sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-8 px-4 shadow-xl     sm:rounded-lg sm:px-10">
-            {% if error %}
-                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm relative">
-                    <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
-                </div>
-            {% endif %}
-
-            <form method="post" class="space-y-6">
-                <fieldset class="fieldset">
-                    <legend class="fieldset-legend">Email</legend>
-                    <div class="mt-1">
-                        <input 
-                            type="email" 
-                            value="{{ last_username }}" 
-                            name="email" 
-                            id="inputEmail" 
-                            autocomplete="email" 
-                            required 
-                            autofocus
-                            class="input w-full"
-                        >
-                    </div>
-                </fielset>
-
-                <fieldset class="fieldset mt-2">
-                    <legend for="inputPassword" class="fieldset-legend">
-                        Senha
-                    </legend>
-                    <div class="mt-1">
-                        <input 
-                            type="password" 
-                            name="password" 
-                            id="inputPassword" 
-                            autocomplete="current-password" 
-                            required
-                            class="input w-full"
-                        >
-                    </div>
-                </fieldset>
-
-                <div class="flex items-center justify-between mb-10">
-                    <div class="flex items-center">
-                        <label for="remember_me" class="label">
-                            <input 
-                                id="remember_me" 
-                                name="_remember_me" 
-                                type="checkbox" 
-                                class="checkbox"
-                            >
-                            Lembrar de mim
-                        </label>
-                    </div>
-                </div>
-
-                <div>
-                    <button 
-                        type="submit"
-                        class="btn btn-primary w-full"
-                    >
-                        Entrar
-                    </button>
-                </div>
-
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            </form>
-        </div>
-    </div>
+  <!-- Camada decorativa: Nuvens e Prédios -->
+  <div aria-hidden="true" class="sm:block hidden pointer-events-none select-none absolute inset-0">
+<!-- NUVENS -->
+<div class="absolute top-6 left-[6%] h-7 w-[260px] rounded-full bg-neutral-200/90
+            shadow-[0_6px_8px_rgba(0,0,0,0.15)]
+            will-change-transform
+            animate-[cloud-in-left_0.8s_ease-out_both,_float-x_3s_ease-in-out_0.8s_infinite_alternate]">
 </div>
+
+<div class="absolute top-10 left-[40%] h-8 w-[290px] rounded-full bg-neutral-200/90
+            shadow-[0_8px_10px_rgba(0,0,0,0.18)]
+            will-change-transform
+            animate-[cloud-in-right_1s_ease-out_both,_float-x_4s_ease-in-out_1s_infinite_alternate]">
+</div>
+
+<div class="absolute top-3 right-[4%] h-7 w-[360px] rounded-full bg-neutral-200/90
+            shadow-[0_5px_7px_rgba(0,0,0,0.15)]
+            will-change-transform
+            animate-[cloud-in-right_0.9s_ease-out_both,_float-x_6s_ease-in-out_0.9s_infinite_alternate]">
+</div>
+
+
+<!-- PRÉDIOS -->
+<div class="absolute bottom-0 left-[5%] w-[50px] h-[180px] rounded-t-xl 
+            bg-gradient-to-t from-[#ff9a00] to-[#ffc233] shadow-[0_6px_10px_rgba(0,0,0,0.2)] animate-[rise-up_1s_ease-out]"></div>
+
+<div class="absolute bottom-0 left-[15%] w-[60px] h-[320px] rounded-t-xl 
+            bg-gradient-to-t from-[#ffb300] to-[#ffd65c] shadow-[0_10px_18px_rgba(0,0,0,0.3)] animate-[rise-up_1s_ease-out]"></div>
+
+<div class="absolute bottom-0 left-[30%] w-[70px] h-[140px] rounded-t-2xl 
+           bg-gradient-to-t from-[#ff9c1a] to-[#ffc84d] shadow-[0_8px_14px_rgba(0,0,0,0.25)] animate-[rise-up_1s_ease-out]"></div>
+
+<div class="absolute bottom-0 right-[20%] w-[50px] h-[120px] rounded-t-2xl 
+             bg-gradient-to-t from-[#ffb300] to-[#ffd65c] shadow-[0_6px_12px_rgba(0,0,0,0.2)] animate-[rise-up_1s_ease-out]"></div>
+
+<div class="absolute bottom-0 right-[8%] w-[70px] h-[320px] rounded-t-2xl 
+            bg-gradient-to-t from-[#ffb300] to-[#ffd65c] shadow-[0_12px_20px_rgba(0,0,0,0.3)] animate-[rise-up_1s_ease-out]"></div>
+
+
+  </div>
+
+  <!-- CONTEÚDO (fica acima) -->
+  <div class="relative z-10 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="card bg-white shadow-2xl">
+      <div class="card-body">
+        {% if error %}
+          <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm relative">
+            <span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+          </div>
+        {% endif %}
+
+        <form method="post" class="space-y-6">
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Email</legend>
+            <div class="mt-1">
+              <input
+                type="email"
+                value="{{ last_username }}"
+                name="email"
+                id="inputEmail"
+                autocomplete="email"
+                required
+                autofocus
+                class="input w-full"
+              >
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset mt-2">
+            <legend for="inputPassword" class="fieldset-legend">Senha</legend>
+            <div class="mt-1">
+              <input
+                type="password"
+                name="password"
+                id="inputPassword"
+                autocomplete="current-password"
+                required
+                class="input w-full"
+              >
+            </div>
+          </fieldset>
+
+          <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center">
+              <label for="remember_me" class="label">
+                <input id="remember_me" name="_remember_me" type="checkbox" class="checkbox">
+                Lembrar de mim
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+          </div>
+
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
