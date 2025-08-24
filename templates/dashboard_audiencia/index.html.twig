@@ -1,0 +1,82 @@
+{% extends 'base.dashboard.html.twig' %}
+{% block title %}Dashboard – Audiência{% endblock %}
+{% block content %} 
+    <section class="space-y-6">
+
+    {# KPIs simples (opcional): seguidores totais por rede #}
+    {% if networks %}
+    <div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200 w-full">
+        <div class="stat">
+        <div class="stat-title">TikTok (seguidores)</div>
+        <div class="stat-value">{{ networks.tiktok.followers.total|number_format(0, ',', '.') }}</div>
+        <div class="stat-desc text-success">+{{ networks.tiktok.followers.new_today|number_format(0, ',', '.') }} hoje</div>
+        </div>
+        <div class="stat">
+        <div class="stat-title">Instagram (seguidores)</div>
+        <div class="stat-value">{{ networks.instagram.followers.total|number_format(0, ',', '.') }}</div>
+        <div class="stat-desc text-success">+{{ networks.instagram.followers.new_today|number_format(0, ',', '.') }} hoje</div>
+        </div>
+        <div class="stat">
+        <div class="stat-title">YouTube (inscritos)</div>
+        <div class="stat-value">{{ networks.youtube.followers.total|number_format(0, ',', '.') }}</div>
+        <div class="stat-desc text-success">+{{ networks.youtube.followers.new_today|number_format(0, ',', '.') }} hoje</div>
+        </div>
+        <div class="stat">
+        <div class="stat-title">Kwai (seguidores)</div>
+        <div class="stat-value">{{ networks.kwai.followers.total|number_format(0, ',', '.') }}</div>
+        <div class="stat-desc text-success">+{{ networks.kwai.followers.new_today|number_format(0, ',', '.') }} hoje</div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+        <h2 class="card-title">Crescimento de Seguidores</h2>
+        <div class="mt-2">
+            {{ render_chart(followersLine) }}
+        </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Distribuição de Views no Dia</h2>
+            <div class="mt-2">
+            {{ render_chart(viewsDistribution) }}
+            </div>
+        </div>
+        </div>
+
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Audiência por Gênero (%)</h2>
+            <div class="mt-2">
+            {{ render_chart(audienceGenderDonut) }}
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Distribuição por Região</h2>
+            <div class="mt-2">
+            {{ render_chart(audienceRegionBar) }}
+            </div>
+        </div>
+        </div>
+
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Distribuição por Faixa Etária</h2>
+            <div class="mt-2">
+            {{ render_chart(audienceAgeBar) }}
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </section>
+{% endblock %}

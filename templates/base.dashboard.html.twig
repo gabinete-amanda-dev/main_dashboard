@@ -31,9 +31,9 @@
          class="tab {% if app.request.get('_route') == 'app_dashboard_engajamento' %}tab-active{% endif %}">
         Engajamento
       </a>
-      <a href=""
+      <a href="{{ path('app_dashboard_audiencia') }}"
          role="tab"
-         class="tab {% if app.request.get('_route') == 'dashboard_audiencia' %}tab-active{% endif %}">
+         class="tab {% if app.request.get('_route') == 'app_dashboard_audiencia' %}tab-active{% endif %}">
         Audiência
       </a>
       <a href=""
