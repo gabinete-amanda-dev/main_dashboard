@@ -1,0 +1,35 @@
+{
+  "date": "2025-08-23",
+  "profile": {
+    "name": "João Silva",
+    "role": "Membro do MBL",
+    "region": "São Paulo"
+  },
+  "totals": {
+    "likes": 25120,
+    "comments": 5850,
+    "views": 189500,
+    "followers": { "total": 223500, "new_today": 1900 },
+    "mentions": 790,
+    "sentiment": { "positive": 64, "neutral": 21, "negative": 15 },
+    "hashtags": { "#MBL": 340, "#liberdade": 130, "#politica": 85, "#reformas": 42, "#economia": 61 }
+  },
+  "networks": {
+    "tiktok": {
+      "engagement": { "likes": 12900, "comments": 2920 },
+      "reach": { "views": 99000 }
+    },
+    "instagram": {
+      "engagement": { "likes": 8200, "comments": 2050 },
+      "reach": { "views": 62000 }
+    },
+    "youtube": {
+      "engagement": { "likes": 3050, "comments": 620 },
+      "reach": { "views": 23000 }
+    },
+    "kwai": {
+      "engagement": { "likes": 970, "comments": 260 },
+      "reach": { "views": 5500 }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{# templates/dashboard/base.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-base-100 text-base-content">
+  <!-- NAVBAR -->
+  <header class="navbar bg-base-200 shadow">
+    <div class="flex-1">
+      <h1 class="text-xl md:text-2xl font-bold">
+        {# Dashboard{% if profile %} – {{ profile.name }} ({{ profile.role }}){% endif %} #}
+      </h1>
+    </div>
+    <div class="flex-none gap-4">
+      <span class="hidden sm:inline opacity-80">Olá, {{ app.user.email }}</span>
+      <a href="{{ path('app_logout') }}" class="btn btn-error btn-sm md:btn-md">Sair</a>
+    </div>
+  </header>
+
+  <!-- NAV TABS -->
+  <div class="container mx-auto px-4 mt-4">
+    <div role="tablist" class="tabs tabs-box w-fit bg-base-300">
+      <a href="{{ path('app_dashboard') }}"
+         role="tab"
+         class="tab {% if app.request.get('_route') == 'app_dashboard' %}tab-active{% endif %}">
+        Overview
+      </a>
+      <a href=""
+         role="tab"
+         class="tab {% if app.request.get('_route') == 'dashboard_engajamento' %}tab-active{% endif %}">
+        Engajamento
+      </a>
+      <a href=""
+         role="tab"
+         class="tab {% if app.request.get('_route') == 'dashboard_audiencia' %}tab-active{% endif %}">
+        Audiência
+      </a>
+      <a href=""
+         role="tab"
+         class="tab {% if app.request.get('_route') == 'dashboard_conteudo' %}tab-active{% endif %}">
+        Conteúdo
+      </a>
+      <a href=""
+         role="tab"
+         class="tab {% if app.request.get('_route') == 'dashboard_comparacao' %}tab-active{% endif %}">
+        Comparação
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="container mx-auto px-4 py-6">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

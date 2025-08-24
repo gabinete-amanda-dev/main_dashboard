@@ -1,174 +1,265 @@
-{% extends 'base.html.twig' %}
+{# templates/dashboard/overview.html.twig #}
+{% extends 'base.dashboard.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard – Overview{% endblock %}
 
-{% block body %}
-<div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-6">
-                <div class="flex items-center">
-                    <h1 class="text-3xl font-bold text-gray-900">
-                        Dashboard
-                    </h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-700">Olá, {{ app.user.email }}</span>
-                    <a 
-                        href="{{ path('app_logout') }}" 
-                        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
-                    >
-                        Sair
-                    </a>
-                </div>
+{% block content %}
+{# <div class="min-h-screen bg-base-100 text-base-content"> #}
+  {# NAVBAR #}
+  {# <header class="navbar bg-secondary">
+    <div class="navbar-start">
+
+    </div>
+    <div class="navbar-end gap-3">
+      <span class="hidden sm:inline opacity-80">Olá, {{ app.user.email }}</span>
+      <a href="{{ path('app_logout') }}" class="btn btn-error btn-sm md:btn-md">Sair</a>
+    </div>
+  </header> #}
+
+  {# <main class="container mx-auto px-4 py-6"> #}
+
+    {# TABS HEADER #}
+    {# <div role="tablist" class="tabs tabs-box bg-base-300 w-fit">
+      <button role="tab" class="tab tab-active" aria-selected="true">Overview</button>
+      <button role="tab" class="tab">Engajamento</button>
+      <button role="tab" class="tab">Audiência</button>
+      <button role="tab" class="tab">Conteúdo</button>
+      <button role="tab" class="tab">Comparação</button>
+    </div> #}
+
+    {# TAB PANELS ----------------------------------------------------------- #}
+
+    {# OVERVIEW #}
+    <section class="space-y-6">
+
+        {# --- KPIs / Stats --- #}
+        {% if totals %}
+        <div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200 w-full">
+            <div class="stat">
+            <div class="stat-title">Likes (Dia)</div>
+            <div class="stat-value">{{ totals.likes|number_format(0, ',', '.') }}</div>
+            </div>
+            <div class="stat">
+            <div class="stat-title">Comentários (Dia)</div>
+            <div class="stat-value">{{ totals.comments|number_format(0, ',', '.') }}</div>
+            </div>
+            <div class="stat">
+            <div class="stat-title">Visualizações (Dia)</div>
+            <div class="stat-value">{{ totals.views|number_format(0, ',', '.') }}</div>
+            </div>
+            <div class="stat">
+            <div class="stat-title">Seguidores</div>
+            <div class="stat-value">{{ totals.followers.total|number_format(0, ',', '.') }}</div>
+            <div class="stat-desc text-success">+{{ totals.followers.new_today|number_format(0, ',', '.') }} hoje</div>
+            </div>
+            <div class="stat">
+            <div class="stat-title">Menções (Dia)</div>
+            <div class="stat-value">{{ totals.mentions|default(0)|number_format(0, ',', '.') }}</div>
             </div>
         </div>
-    </header>
+        {% else %}
+        <div class="alert alert-warning">
+            <span>Sem dados de totais para hoje.</span>
+        </div>
+        {% endif %}
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="px-4 py-6 sm:px-0">
-        <select class="px-4 py-3 rounded-full">
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-        </select>
-
-            <!-- Welcome Card -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg mb-6">
-                <div class="px-4 py-5 sm:p-6">
-                    <div class="flex items-center">
-                        <div class="shrink-0">
-                            <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt class="text-sm font-medium text-gray-500 truncate">
-                                    Bem-vindo de volta!
-                                </dt>
-                                <dd class="text-lg font-medium text-gray-900">
-                                    {{ app.user.email }}
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
+        {# --- Donuts principais: Likes / Comentários / Visualizações por rede --- #}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-base-200 shadow">
+            <div class="card-body p-4">
+            <h2 class="card-title">Likes por Rede</h2>
+            <div class="mt-2">
+                {{ render_chart(likesChart) }}
             </div>
-
-            <!-- User Info Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- User ID Card -->
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="shrink-0">
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <span class="text-white text-sm font-medium">#</span>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        ID do Usuário
-                                    </dt>
-                                    <dd class="text-lg font-medium text-gray-900">
-                                        {{ app.user.id }}
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Email Card -->
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="shrink-0">
-                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Email
-                                    </dt>
-                                    <dd class="text-lg font-medium text-gray-900 truncate">
-                                        {{ app.user.email }}
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Roles Card -->
-                <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="shrink-0">
-                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">
-                                        Permissões
-                                    </dt>
-                                    <dd class="text-lg font-medium text-gray-900">
-                                        {% for role in app.user.roles %}
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mr-1">
-                                                {{ role }}
-                                            </span>
-                                        {% endfor %}
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="mt-6">
-                <div class="bg-white shadow-sm rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Ações Rápidas
-                        </h3>
-                        <div class="mt-5">
-                            <div class="rounded-md bg-blue-50 p-4">
-                                <div class="flex">
-                                    <div class="shrink-0">
-                                        <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm text-blue-700">
-                                            Bem-vindo ao seu dashboard! Aqui você pode ver suas informações de usuário.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </main>
 
-    {{ render_chart(chart) }}
-</div>
+        <div class="card bg-base-200 shadow">
+            <div class="card-body p-4">
+            <h2 class="card-title">Comentários por Rede</h2>
+            <div class="mt-2">
+                {{ render_chart(commentsChart) }}
+            </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-200 shadow">
+            <div class="card-body p-4">
+            <h2 class="card-title">Visualizações por Rede</h2>
+            <div class="mt-2">
+                {{ render_chart(viewsChart) }}
+            </div>
+            </div>
+        </div>
+        </div>
+
+        {# --- Sentimento & Hashtags --- #}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+            <div class="card-body p-4">
+            <h2 class="card-title">Sentimento do Dia</h2>
+            <div class="mt-2">
+                {{ render_chart(sentimentChart) }}
+            </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-200 shadow">
+            <div class="card-body p-4">
+            <h2 class="card-title">Top Hashtags</h2>
+            <div class="mt-2">
+                {{ render_chart(hashtagsChart) }}
+            </div>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    {# ENGAJAMENTO #}
+    <section class="mt-6 hidden" role="tabpanel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Engajamento por Rede (Empilhado)</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[gráfico aqui]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Taxa de Engajamento (%)</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[gráfico aqui]</div>
+          </div>
+        </div>
+      </div>
+      <div class="card bg-base-200 shadow mt-6">
+        <div class="card-body p-4">
+          <h2 class="card-title">Evolução do Engajamento (7–30 dias)</h2>
+          <div class="h-72 flex items-center justify-center opacity-60">[gráfico aqui]</div>
+        </div>
+      </div>
+    </section>
+
+    {# AUDIÊNCIA #}
+    <section class="mt-6 hidden" role="tabpanel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Crescimento de Seguidores</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[gráfico aqui]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Distribuição de Views por Rede</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[gráfico aqui]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Regiões</h2>
+            <div class="h-64 flex items-center justify-center opacity-60">[mapa/donut/barras]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Faixa Etária</h2>
+            <div class="h-64 flex items-center justify-center opacity-60">[barras/stacked]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Gênero</h2>
+            <div class="h-64 flex items-center justify-center opacity-60">[donut]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# CONTEÚDO #}
+    <section class="mt-6 hidden" role="tabpanel">
+      <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="card-title">Top Posts</h2>
+            <div class="join hidden md:flex">
+              <button class="btn btn-sm join-item btn-ghost">Hoje</button>
+              <button class="btn btn-sm join-item btn-ghost">7 dias</button>
+              <button class="btn btn-sm join-item btn-ghost">30 dias</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto mt-2">
+            <table class="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Rede</th>
+                  <th>Título</th>
+                  <th class="text-right">Views</th>
+                  <th class="text-right">Likes</th>
+                  <th class="text-right">Comentários</th>
+                  <th class="text-right">Compart.</th>
+                  <th class="text-right">Salvos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td colspan="7" class="text-center opacity-60">[tabela aqui]</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Eficiência por Post (Likes vs Views)</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[scatter aqui]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Engajamento por Tema</h2>
+            <div class="h-72 flex items-center justify-center opacity-60">[barras/donut aqui]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow mt-6">
+        <div class="card-body p-4">
+          <h2 class="card-title">Melhores Horários de Postagem</h2>
+          <div class="h-64 flex items-center justify-center opacity-60">[heatmap/linha aqui]</div>
+        </div>
+      </div>
+    </section>
+
+    {# COMPARAÇÃO #}
+    <section class="mt-6 hidden" role="tabpanel">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Distribuição do Engajamento</h2>
+            <div class="h-64 flex items-center justify-center opacity-60">[donut aqui]</div>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow">
+          <div class="card-body p-4">
+            <h2 class="card-title">Eficiência por Rede (Bubble)</h2>
+            <div class="h-64 flex items-center justify-center opacity-60">[bubble aqui]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow mt-6">
+        <div class="card-body p-4">
+          <h2 class="card-title">Benchmark com Pares</h2>
+          <div class="h-64 flex items-center justify-center opacity-60">[tabela/gráfico aqui]</div>
+        </div>
+      </div>
+    </section>
+  {# </main> #}
+{# </div> #}
 {% endblock %}
