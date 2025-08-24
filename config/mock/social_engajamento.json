@@ -1,0 +1,27 @@
+{
+  "date": "2025-08-23",
+  "profile": { "name": "João Silva", "role": "Membro do MBL" },
+  "networks": {
+    "tiktok":    { "engagement": { "likes": 12900, "comments": 2920, "shares": 2300, "saves": 420 },  "views": 99000 },
+    "instagram": { "engagement": { "likes":  8200, "comments": 2050, "shares": 1150, "saves": 470 },  "views": 62000 },
+    "youtube":   { "engagement": { "likes":  3050, "comments":  620, "shares":  420, "saves": 110 },  "views": 23000 },
+    "kwai":      { "engagement": { "likes":   970, "comments":  260, "shares":  130, "saves":  60 },  "views":  5500 }
+  },
+  "comparisons": {
+    "engagement_rate_by_network_pct": {
+      "tiktok": 19.0,
+      "instagram": 19.7,
+      "youtube": 17.6,
+      "kwai": 24.2
+    }
+  },
+  "history": {
+    "engagement_trend": [
+      { "date": "2025-08-19", "tiktok": 15000, "instagram":  9000, "youtube": 3700, "kwai": 1300 },
+      { "date": "2025-08-20", "tiktok": 16200, "instagram":  8800, "youtube": 3400, "kwai": 1200 },
+      { "date": "2025-08-21", "tiktok": 17100, "instagram":  9100, "youtube": 3600, "kwai": 1400 },
+      { "date": "2025-08-22", "tiktok": 17600, "instagram":  9400, "youtube": 3800, "kwai": 1350 },
+      { "date": "2025-08-23", "tiktok": 18300, "instagram":  9700, "youtube": 4040, "kwai": 1420 }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{% extends 'base.dashboard.html.twig' %}
+{% block title %}Dashboard – Engajamento{% endblock %}
+{% block content %} 
+
+    <span class="hidden sm:inline opacity-80">
+    {% if app.user %}Olá, {{ app.user.email }}{% endif %}
+    </span>
+    <section class="space-y-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Engajamento por Rede (Empilhado)</h2>
+            <div class="mt-2">
+            {{ render_chart(engStacked) }}
+            </div>
+        </div>
+        </div>
+
+        <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+            <h2 class="card-title">Taxa de Engajamento (%)</h2>
+            <div class="mt-2">
+            {{ render_chart(engRateRadar) }}
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="card bg-base-200 shadow">
+        <div class="card-body p-4">
+        <h2 class="card-title">Evolução do Engajamento (últimos dias)</h2>
+        <div class="mt-2">
+            {{ render_chart(engLine) }}
+        </div>
+        </div>
+    </div>
+
+    </section>
+{% endblock %}
