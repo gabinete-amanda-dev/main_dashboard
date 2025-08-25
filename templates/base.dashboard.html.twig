@@ -12,9 +12,22 @@
         {# Dashboard{% if profile %} – {{ profile.name }} ({{ profile.role }}){% endif %} #}
       </h1>
     </div>
-    <div class="flex-none gap-4">
-      <span class="hidden sm:inline opacity-80">Olá, {{ app.user.email }}</span>
-      <a href="{{ path('app_logout') }}" class="btn btn-error btn-sm md:btn-md">Sair</a>
+    <div class="flex-none space-x-4">
+      <div class="avatar">
+        <div class="h-[3rem] rounded-full">
+          <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+        </div>
+      </div>
+      <div class="hidden sm:inline opacity-80">{{ app.user.email }}</div>
+
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost">
+          <i class="ph ph-caret-down"></i>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+          <li><a href="{{ path('app_logout') }}">Sair</a></li>
+        </ul>
+      </div>
     </div>
   </header>
 
