@@ -8,12 +8,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Service\ChartService;
 
 final class DashboardAudienciaController extends AbstractController
 {
     #[Route('/dashboard/audiencia', name: 'app_dashboard_audiencia')]
     #[IsGranted('ROLE_USER')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(ChartBuilderInterface $chartBuilder, ChartService $chartService): Response
     {
         $user = $this->getUser();
 
@@ -55,18 +56,24 @@ final class DashboardAudienciaController extends AbstractController
         $viewsToday = $data['views_today'] ?? [];
         $viewsValues = array_map(fn($n)=> (int)($viewsToday[$n] ?? 0), $networks);
 
-        $viewsDistribution = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
-        $viewsDistribution->setData([
-            'labels'   => $labels,
-            'datasets' => [[
-                'label'           => 'Views (Dia)',
-                'data'            => $viewsValues,
-                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171'],
-            ]],
-        ]);
-        $viewsDistribution->setOptions([
-            'plugins'=>['title'=>['display'=>true,'text'=>'Distribuição de Visualizações no Dia'],'legend'=>['position'=>'bottom']]
-        ]);
+        // $viewsDistribution = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        // $viewsDistribution->setData([
+        //     'labels'   => $labels,
+        //     'datasets' => [[
+        //         'label'           => 'Views (Dia)',
+        //         'data'            => $viewsValues,
+        //         'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171'],
+        //     ]],
+        // ]);
+        // $viewsDistribution->setOptions([
+        //     'plugins'=>['title'=>['display'=>true,'text'=>'Distribuição de Visualizações no Dia'],'legend'=>['position'=>'bottom']]
+        // ]);
+        $viewsDistribution = $chartService->createDonutChart(
+            'Views (Dia)',
+            $labels,
+            $viewsValues,
+            ['#60a5fa','#34d399','#fbbf24','#f87171']
+        );
 
         // ---------- (C) Barras: audiência por região ----------
         $regions = $data['segments']['audience_by_region'] ?? [];
@@ -114,18 +121,24 @@ final class DashboardAudienciaController extends AbstractController
         $genderLabels = ['masculino','feminino','outros/nd'];
         $genderValues = array_map(fn($k)=> (float)($gender[$k] ?? 0), $genderLabels);
 
-        $audienceGenderDonut = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
-        $audienceGenderDonut->setData([
-            'labels' => ['Masculino','Feminino','Outros/ND'],
-            'datasets' => [[
-                'label' => 'Audiência por Gênero (%)',
-                'data'  => $genderValues,
-                'backgroundColor' => ['#60a5fa','#f472b6','#9ca3af'],
-            ]],
-        ]);
-        $audienceGenderDonut->setOptions([
-            'plugins'=>['title'=>['display'=>true,'text'=>'Audiência por Gênero (%)'],'legend'=>['position'=>'bottom']]
-        ]);
+        // $audienceGenderDonut = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        // $audienceGenderDonut->setData([
+        //     'labels' => ['Masculino','Feminino','Outros/ND'],
+        //     'datasets' => [[
+        //         'label' => 'Audiência por Gênero (%)',
+        //         'data'  => $genderValues,
+        //         'backgroundColor' => ['#60a5fa','#f472b6','#9ca3af'],
+        //     ]],
+        // ]);
+        // $audienceGenderDonut->setOptions([
+        //     'plugins'=>['title'=>['display'=>true,'text'=>'Audiência por Gênero (%)'],'legend'=>['position'=>'bottom']]
+        // ]);
+        $audienceGenderDonut = $chartService->createDonutChart(
+            'Audiência por Gênero (%)',
+            ['Masculino','Feminino','Outros/ND'],
+            $genderValues,
+            ['#60a5fa','#f472b6','#9ca3af']
+        );
 
         return $this->render('dashboard_audiencia/index.html.twig', [
             'controller_name' => 'DashboardAudienciaController',
