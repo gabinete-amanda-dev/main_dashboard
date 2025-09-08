@@ -18,11 +18,12 @@ final class DashboardController extends AbstractController
     {
         $user = $this->getUser();
 
+        // Fetch Facebook data via Meta service helpers
         $pageId = 'amandavettorazzo.sp';
         $name = $fbService->getPageName($pageId);
         $followers = (int) ($fbService->getPageFolloewers($pageId) ?? 0);
         $posts = $fbService->getPosts($pageId, 10);
-
+        // Take up to 5 posts
         $topPosts = array_slice($posts, 0, 5);
         $labelsPosts = [];
         $likesData = [];
@@ -33,7 +34,6 @@ final class DashboardController extends AbstractController
             $likesData[] = (int) ($p['likes'] ?? 0);
             $commentsData[] = (int) ($p['comments'] ?? 0);
         }
-
         $likesChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $likesChart->setData([
             'labels'   => $labelsPosts,
@@ -47,6 +47,7 @@ final class DashboardController extends AbstractController
             'plugins' => ['title' => ['display' => true, 'text' => 'Likes por Post (Facebook)']],
         ]);
 
+        // Comentários por post (donut)
         $commentsChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $commentsChart->setData([
             'labels'   => $labelsPosts,
@@ -60,6 +61,7 @@ final class DashboardController extends AbstractController
             'plugins' => ['title' => ['display' => true, 'text' => 'Comentários por Post (Facebook)']],
         ]);
 
+        // Followers vs Posts count as a placeholder for views donut
         $viewsChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $viewsChart->setData([
             'labels'   => ['Seguidores','Posts Considerados'],
@@ -73,6 +75,7 @@ final class DashboardController extends AbstractController
             'plugins' => ['title' => ['display' => true, 'text' => 'Seguidores x Posts']],
         ]);
 
+        // Totals for stats section
         $totals = [
             'likes' => array_sum($likesData),
             'comments' => array_sum($commentsData),
@@ -81,6 +84,7 @@ final class DashboardController extends AbstractController
             'mentions' => 0,
         ];
 
+        // Minimal sentiment/hashtags placeholders (no extraction yet)
         $sentimentChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $sentimentChart->setData([
             'labels'   => ['Positivo','Neutro','Negativo'],
@@ -119,4 +123,3 @@ final class DashboardController extends AbstractController
         ]);
     }
 }
-

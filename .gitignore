@@ -5,9 +5,18 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/var/
+/var/*
+!/var/.gitkeep
+!/var/**/.gitkeep
+# Keep chrome profile folder structure in repo, but not contents
+!/var/google-chrome/
+!/var/google-chrome/.gitkeep
 /vendor/
 ###< symfony/framework-bundle ###
+
+# Local virtualenvs and FB helper profiles
+.venv311/
+.fb_profile*
 
 ###> phpunit/phpunit ###
 /phpunit.xml

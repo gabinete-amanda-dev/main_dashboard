@@ -58,6 +58,7 @@
   - The controller remains unchanged when switching modes; `FB_MODE` selects the implementation.
 
 **Deploy to AWS Lambda (Bref) + Cognito**
+**Deploy to AWS Lambda (Bref) + Cognito**
 - Overview: Use Bref to run Symfony on Lambda behind API Gateway; protect the dashboard with Cognito.
 - Requirements: AWS CLI configured, Node 18+, PHP 8.1+, Composer, an S3 bucket for deployment assets.
 - Install Bref:
@@ -132,4 +133,3 @@
 **Security**
 - Do not commit real credentials. Use env vars or secrets storage.
 - Respect Facebook terms of service and applicable laws when scraping.
-
