@@ -34,8 +34,6 @@ final class DashboardController extends AbstractController
             $likesData[] = (int) ($p['likes'] ?? 0);
             $commentsData[] = (int) ($p['comments'] ?? 0);
         }
-
-        // Likes por post (donut)
         $likesChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $likesChart->setData([
             'labels'   => $labelsPosts,
@@ -82,10 +80,7 @@ final class DashboardController extends AbstractController
             'likes' => array_sum($likesData),
             'comments' => array_sum($commentsData),
             'views' => 0,
-            'followers' => [
-                'total' => $followers,
-                'new_today' => 0,
-            ],
+            'followers' => [ 'total' => $followers, 'new_today' => 0 ],
             'mentions' => 0,
         ];
 

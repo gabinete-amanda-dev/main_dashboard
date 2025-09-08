@@ -34,7 +34,7 @@
 
         {# --- KPIs / Stats --- #}
         {% if totals %}
-        <div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200 w-full">
+        <div class="stats stats-vertical lg:stats-horizontal w-full card-theme">
             <div class="stat">
             <div class="stat-title">Likes (Dia)</div>
             <div class="stat-value">{{ totals.likes|number_format(0, ',', '.') }}</div>
@@ -65,7 +65,7 @@
 
         {# --- Donuts principais: Likes / Comentários / Visualizações por rede --- #}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="card bg-base-200 shadow">
+        <div class="card card-theme">
             <div class="card-body p-4">
             <h2 class="card-title">Likes por Rede</h2>
             <div class="mt-2">
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-200 shadow">
+        <div class="card card-theme">
             <div class="card-body p-4">
             <h2 class="card-title">Comentários por Rede</h2>
             <div class="mt-2">
@@ -83,7 +83,7 @@
             </div>
         </div>
 
-        <div class="card bg-base-200 shadow">
+        <div class="card card-theme ">
             <div class="card-body p-4">
             <h2 class="card-title">Visualizações por Rede</h2>
             <div class="mt-2">
@@ -95,23 +95,23 @@
 
         {# --- Sentimento & Hashtags --- #}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="card bg-base-200 shadow">
-            <div class="card-body p-4">
-            <h2 class="card-title">Sentimento do Dia</h2>
-            <div class="mt-2">
-                {{ render_chart(sentimentChart) }}
-            </div>
-            </div>
-        </div>
+          <div class="card card-theme">
+              <div class="card-body p-4">
+              <h2 class="card-title">Sentimento do Dia</h2>
+              <div class="mt-2">
+                  {{ render_chart(sentimentChart) }}
+              </div>
+              </div>
+          </div>
 
-        <div class="card bg-base-200 shadow">
-            <div class="card-body p-4">
-            <h2 class="card-title">Top Hashtags</h2>
-            <div class="mt-2">
-                {{ render_chart(hashtagsChart) }}
-            </div>
-            </div>
-        </div>
+          <div class="card card-theme">
+              <div class="card-body p-4">
+              <h2 class="card-title">Top Hashtags</h2>
+              <div class="mt-2">
+                  {{ render_chart(hashtagsChart) }}
+              </div>
+              </div>
+          </div>
         </div>
 
     </section>

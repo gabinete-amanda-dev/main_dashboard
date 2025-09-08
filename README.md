@@ -57,6 +57,72 @@
   - Fetches name, followers, and posts; renders charts with `symfony/ux-chartjs`.
   - The controller remains unchanged when switching modes; `FB_MODE` selects the implementation.
 
+**Deploy to AWS Lambda (Bref) + Cognito**
+**Deploy to AWS Lambda (Bref) + Cognito**
+- Overview: Use Bref to run Symfony on Lambda behind API Gateway; protect the dashboard with Cognito.
+- Requirements: AWS CLI configured, Node 18+, PHP 8.1+, Composer, an S3 bucket for deployment assets.
+- Install Bref:
+  - `composer require bref/bref --dev`
+  - Optional: `composer require bref/symfony-bridge`
+- serverless.yml (example):
+
+  service: main-dashboard
+  provider:
+    name: aws
+    region: us-east-1
+    runtime: provided.al2
+    environment:
+      APP_ENV: prod
+      FB_MODE: ${env:FB_MODE, 'crawler'}
+      FACEBOOK_ACCESS_TOKEN: ${env:FACEBOOK_ACCESS_TOKEN, ''}
+      PANTHER_REMOTE_URL: ${env:PANTHER_REMOTE_URL, ''}
+    iam:
+      role: arn:aws:iam::<account-id>:role/<lambda-exec-role>
+  plugins:
+    - ./vendor/bref/bref
+  functions:
+    web:
+      handler: public/index.php
+      runtime: php-82-fpm
+      events:
+        - httpApi:
+            method: ANY
+            path: /{proxy+}
+            authorizer:
+              type: jwt
+              issuerUrl: https://cognito-idp.<region>.amazonaws.com/<user-pool-id>
+              audience:
+                - <app-client-id>
+  package:
+    exclude:
+      - node_modules/**
+      - var/**
+      - tests/**
+      - .git/**
+      - .venv*/**
+
+- Cognito setup (JWT authorizer for API Gateway HTTP API):
+  - Create a Cognito User Pool and an App Client (no client secret for SPA flows).
+  - Configure a Cognito Domain (Hosted UI) for login.
+  - Note the User Pool ID and App Client ID; use them in `issuerUrl` and `audience` above.
+  - In API Gateway (HTTP API), the JWT authorizer validates the Authorization: Bearer <JWT> on all routes.
+  - Frontend/login flow: redirect users to the Cognito Hosted UI; on return, store the ID token and include it in `Authorization` header for requests to the dashboard.
+
+- Running headless Chrome on Lambda (scraper mode) options:
+  - Easiest: use a managed remote Chrome and set `PANTHER_REMOTE_URL` (e.g., Browserless/Selenium Grid). Lambda connects out; no system Chrome needed.
+  - Advanced: attach a Lambda layer with Chromium (e.g., `Sparticuz/chromium`) and a matching Chromedriver, then set `PANTHER_CHROME_BINARY` and start `chromedriver` via a sidecar/custom runtime.
+  - For simple deployments, set `FB_MODE=crawler` in Lambda to avoid a browser.
+
+- Deploy:
+  - Export required envs (or use CI/CD params): `export FB_MODE=crawler`
+  - `composer install --no-dev --optimize-autoloader`
+  - `npm ci && npm run build`
+  - `vendor/bin/bref deploy --stage prod` (or `serverless deploy`)
+
+- Configure environment variables in Lambda:
+  - In the Lambda console, set `FB_MODE`, `FACEBOOK_ACCESS_TOKEN`, and if using remote Chrome: `PANTHER_REMOTE_URL`.
+  - For scraper mode with login, prefer a remote WebDriver rather than persisting a profile on Lambda.
+
 **Troubleshooting**
 - 2FA challenge: run non‑headless once (`PANTHER_HEADLESS=0`) with a persistent `PANTHER_PROFILE_DIR`, complete approvals, then return to headless.
 - Chromedriver issues (locks/DevToolsActivePort):
@@ -67,4 +133,3 @@
 **Security**
 - Do not commit real credentials. Use env vars or secrets storage.
 - Respect Facebook terms of service and applicable laws when scraping.
-

@@ -52,6 +52,10 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  .card-theme {
+    @apply bg-base-200 shadow-lg border-2 border-base-300;
+  }
 }
 
 /* canvas {

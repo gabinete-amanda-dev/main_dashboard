@@ -8,12 +8,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Service\ChartService;
 
 final class DashboardComparacaoController extends AbstractController
 {
     #[Route('/dashboard/comparacao', name: 'app_dashboard_comparacao')]
     #[IsGranted('ROLE_USER')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(ChartBuilderInterface $chartBuilder, ChartService $chartService): Response
     {
         $user = $this->getUser();
 
@@ -29,14 +30,20 @@ final class DashboardComparacaoController extends AbstractController
         $dist = $data['comparisons']['engagement_distribution_pct'] ?? [];
         $distValues = array_map(fn($n)=> (float)($dist[$n] ?? 0), $networks);
 
-        $distDonut = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
-        $distDonut->setData([
-            'labels' => $labels,
-            'datasets' => [[ 'label'=>'% do Engajamento', 'data'=>$distValues, 'backgroundColor'=>$palette ]]
-        ]);
-        $distDonut->setOptions([
-            'plugins'=>['title'=>['display'=>true,'text'=>'Distribuição do Engajamento (%)'],'legend'=>['position'=>'bottom']]
-        ]);
+        // $distDonut = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        // $distDonut->setData([
+        //     'labels' => $labels,
+        //     'datasets' => [[ 'label'=>'% do Engajamento', 'data'=>$distValues, 'backgroundColor'=>$palette ]]
+        // ]);
+        // $distDonut->setOptions([
+        //     'plugins'=>['title'=>['display'=>true,'text'=>'Distribuição do Engajamento (%)'],'legend'=>['position'=>'bottom']]
+        // ]);
+        $distDonut = $chartService->createDonutChart(
+            'Distribuição do Engajamento (%)',
+            $labels,
+            $distValues,
+            $palette
+        );
 
         // (B) Bubble — Eficiência por Rede (x=views, y=efficiency_index, r=followers)
         $netData = $data['networks'] ?? [];
