@@ -3,6 +3,7 @@
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
         "@babel/preset-react": "^7.27.1",
+        "@playwright/test": "^1.55.0",
         "@symfony/webpack-encore": "^5.0.0",
         "@tailwindcss/postcss": "^4.1.12",
         "core-js": "^3.38.0",
@@ -27,6 +28,8 @@
         "@symfony/ux-chartjs": "^2.23.0",
         "@symfony/ux-react": "^2.29.2",
         "@symfony/ux-turbo": "^2.29.2",
+        "@victor-teles/playwright-php": "https://github.com/victor-teles/playwright-php/tarball/main",
+        "playwright": "^1.55.0",
         "stimulus": "^3.2.2"
     }
 }

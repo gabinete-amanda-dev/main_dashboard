@@ -8,105 +8,118 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use App\Service\FacebookService;
 
 final class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
     #[IsGranted('ROLE_USER')]
-    public function index(ChartBuilderInterface $chartBuilder): Response
+    public function index(ChartBuilderInterface $chartBuilder, FacebookService $fbService): Response
     {
         $user = $this->getUser();
-        // Carrega JSON mock (exemplo)
-        $jsonPath = $this->getParameter('kernel.project_dir') . '/config/mock/social_overview.json';
-        $data = json_decode(file_get_contents($jsonPath), true);
 
-        // Redes
-        $networks = ['tiktok', 'instagram', 'youtube', 'kwai'];
-        $labels   = array_map('ucfirst', $networks);
+        // Fetch Facebook data via Meta service helpers
+        $pageId = 'amandavettorazzo.sp';
+        $name = $fbService->getPageName($pageId);
+        $followers = (int) ($fbService->getPageFolloewers($pageId) ?? 0);
+        $posts = $fbService->getPosts($pageId, 10);
+        // Take up to 5 posts
+        $topPosts = array_slice($posts, 0, 5);
+        $labelsPosts = [];
+        $likesData = [];
+        $commentsData = [];
+        foreach ($topPosts as $idx => $p) {
+            $label = !empty($p['text']) ? mb_substr($p['text'], 0, 18) . (mb_strlen($p['text']) > 18 ? '…' : '') : 'Post '.($idx+1);
+            $labelsPosts[] = $label;
+            $likesData[] = (int) ($p['likes'] ?? 0);
+            $commentsData[] = (int) ($p['comments'] ?? 0);
+        }
 
-        // Extrair valores
-        $likes     = array_map(fn($n) => $data['networks'][$n]['engagement']['likes'] ?? 0, $networks);
-        $comments  = array_map(fn($n) => $data['networks'][$n]['engagement']['comments'] ?? 0, $networks);
-        $views     = array_map(fn($n) => $data['networks'][$n]['reach']['views'] ?? 0, $networks);
-
-        // Likes por rede (donut)
+        // Likes por post (donut)
         $likesChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $likesChart->setData([
-            'labels'   => $labels,
+            'labels'   => $labelsPosts,
             'datasets' => [[
-                'label'           => 'Likes',
-                'data'            => $likes,
-                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171'],
+                'label'           => 'Likes por Post (Facebook)',
+                'data'            => $likesData,
+                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171','#c084fc'],
             ]],
         ]);
         $likesChart->setOptions([
-            'plugins' => ['title' => ['display' => true, 'text' => 'Likes por Rede']],
+            'plugins' => ['title' => ['display' => true, 'text' => 'Likes por Post (Facebook)']],
         ]);
 
-        // Comentários por rede (donut)
+        // Comentários por post (donut)
         $commentsChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $commentsChart->setData([
-            'labels'   => $labels,
+            'labels'   => $labelsPosts,
             'datasets' => [[
-                'label'           => 'Comentários',
-                'data'            => $comments,
-                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171'],
+                'label'           => 'Comentários por Post (Facebook)',
+                'data'            => $commentsData,
+                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171','#c084fc'],
             ]],
         ]);
         $commentsChart->setOptions([
-            'plugins' => ['title' => ['display' => true, 'text' => 'Comentários por Rede']],
+            'plugins' => ['title' => ['display' => true, 'text' => 'Comentários por Post (Facebook)']],
         ]);
 
-        // Visualizações por rede (donut)
+        // Followers vs Posts count as a placeholder for views donut
         $viewsChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $viewsChart->setData([
-            'labels'   => $labels,
+            'labels'   => ['Seguidores','Posts Considerados'],
             'datasets' => [[
-                'label'           => 'Visualizações',
-                'data'            => $views,
-                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171'],
+                'label'           => 'Seguidores x Posts',
+                'data'            => [ $followers, max(count($topPosts), 1) ],
+                'backgroundColor' => ['#60a5fa','#9ca3af'],
             ]],
         ]);
         $viewsChart->setOptions([
-            'plugins' => ['title' => ['display' => true, 'text' => 'Visualizações por Rede']],
+            'plugins' => ['title' => ['display' => true, 'text' => 'Seguidores x Posts']],
         ]);
 
-        // Sentimento (donut)
-        $sent = $data['totals']['sentiment'] ?? ['positive' => 0, 'neutral' => 0, 'negative' => 0];
+        // Totals for stats section
+        $totals = [
+            'likes' => array_sum($likesData),
+            'comments' => array_sum($commentsData),
+            'views' => 0,
+            'followers' => [
+                'total' => $followers,
+                'new_today' => 0,
+            ],
+            'mentions' => 0,
+        ];
+
+        // Minimal sentiment/hashtags placeholders (no extraction yet)
         $sentimentChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $sentimentChart->setData([
             'labels'   => ['Positivo','Neutro','Negativo'],
             'datasets' => [[
                 'label'           => 'Sentimento',
-                'data'            => [$sent['positive'], $sent['neutral'], $sent['negative']],
+                'data'            => [0, 1, 0],
                 'backgroundColor' => ['#10b981','#9ca3af','#ef4444'],
             ]],
         ]);
         $sentimentChart->setOptions([
-            'plugins' => ['title' => ['display' => true, 'text' => 'Sentimento do Dia']],
+            'plugins' => ['title' => ['display' => true, 'text' => 'Sentimento (placeholder)']],
         ]);
 
-        // Top Hashtags (donut)
-        $hashtags = $data['totals']['hashtags'] ?? [];
-        arsort($hashtags);
-        $topHashtags = array_slice($hashtags, 0, 5, true);
         $hashtagsChart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $hashtagsChart->setData([
-            'labels'   => array_keys($topHashtags),
+            'labels'   => ['#facebook'],
             'datasets' => [[
                 'label'           => 'Hashtags',
-                'data'            => array_values($topHashtags),
-                'backgroundColor' => ['#60a5fa','#34d399','#fbbf24','#f87171','#c084fc'],
+                'data'            => [1],
+                'backgroundColor' => ['#60a5fa'],
             ]],
         ]);
         $hashtagsChart->setOptions([
-            'plugins' => ['title' => ['display' => true, 'text' => 'Top Hashtags do Dia']],
+            'plugins' => ['title' => ['display' => true, 'text' => 'Top Hashtags (placeholder)']],
         ]);
-        
+
         return $this->render('dashboard/index.html.twig', [
-            'user' => $user,
-            'profile'        => $data['profile'] ?? null,
-            'totals'         => $data['totals'] ?? null,
+            'user'           => $user,
+            'profile'        => ['name' => $name ?? 'Facebook'],
+            'totals'         => $totals,
             'likesChart'     => $likesChart,
             'commentsChart'  => $commentsChart,
             'viewsChart'     => $viewsChart,

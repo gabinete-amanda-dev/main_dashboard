@@ -20,7 +20,10 @@ services:
             $accessToken: '%env(INSTAGRAM_ACCESS_TOKEN)%' # Get from environment variable
     App\Service\FacebookService:
         arguments:
-            $accessToken: '%env(FACEBOOK_ACCESS_TOKEN)%' # Get from environment variable            
+            $accessToken: '%env(FACEBOOK_ACCESS_TOKEN)%' # Get from environment variable
+    App\Service\Meta\Facebook\FacebookService:
+        arguments:
+            $accessToken: '%env(FACEBOOK_ACCESS_TOKEN)%'
 
     App\EventListener\ExceptionListener:
         # arguments:

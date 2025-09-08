@@ -7,6 +7,7 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "amphp/http-client": "^5.3",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.15",
         "doctrine/doctrine-migrations-bundle": "^3.4",
@@ -22,6 +23,7 @@
         "symfony/asset-mapper": "7.3.*",
         "symfony/console": "7.3.*",
         "symfony/doctrine-messenger": "7.3.*",
+        "symfony/dom-crawler": "7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",
         "symfony/flex": "^2",
@@ -33,6 +35,7 @@
         "symfony/mime": "7.3.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "7.3.*",
+        "symfony/panther": "^2.2",
         "symfony/process": "7.3.*",
         "symfony/property-access": "7.3.*",
         "symfony/property-info": "7.3.*",
@@ -51,7 +54,8 @@
         "symfony/webpack-encore-bundle": "^2.3",
         "symfony/yaml": "7.3.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "victor-teles/playwright-php": "^1.0"
     },
     "config": {
         "allow-plugins": {
@@ -105,6 +109,7 @@
         }
     },
     "require-dev": {
+        "dbrekelmans/bdi": "^1.4",
         "phpunit/phpunit": "^12.3",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",

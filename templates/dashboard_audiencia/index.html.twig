@@ -29,54 +29,58 @@
     </div>
     {% endif %}
 
-    <div class="card bg-base-200 shadow">
-        <div class="card-body p-4">
-        <h2 class="card-title">Crescimento de Seguidores</h2>
-        <div class="mt-2">
-            {{ render_chart(followersLine) }}
-        </div>
-        </div>
+    <!-- NAV TABS -->
+    <div class="container mx-auto px-4 mt-4">
+
+        <div class="tabs tabs-bordered">
+            <input type="radio" id="tab1" name="my_tabs_3" class="tab" aria-label="Todos" checked />
+            <input type="radio" id="tab2" name="my_tabs_3" class="tab" aria-label="Instagram" />
+            <input type="radio" id="tab3" name="my_tabs_3" class="tab" aria-label="Facebook" />
+            <input type="radio" id="tab4" name="my_tabs_3" class="tab" aria-label="YouTube" />
+            <input type="radio" id="tab5" name="my_tabs_3" class="tab" aria-label="Kwai" />
+            <input type="radio" id="tab6" name="my_tabs_3" class="tab" aria-label="X" />
+
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Crescimento de Seguidores</h2>
+                <div class="mt-2">
+                    {{ render_chart(followersLine) }}
+                </div> 
+            </div>
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Distribuição de Views no Dia</h2>
+                <div class="mt-2">
+                    {{ render_chart(viewsDistribution) }}
+                </div> 
+            </div>
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Audiência por Gênero (%)</h2>
+                <div class="mt-2">
+                    {{ render_chart(audienceGenderDonut) }}
+                </div>
+            </div>
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Distribuição por Região</h2>
+                <div class="mt-2">
+                    {{ render_chart(audienceRegionBar) }}
+                </div> 
+            </div>
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Distribuição por Faixa Etária</h2>
+                <div class="mt-2">
+                    {{ render_chart(audienceAgeBar) }}
+                </div>
+            </div>
+            <div class="tab-content bg-base-100 border-base-300 p-6" hidden>
+                <h2 class="card-title">Distribuição por Faixa Etária</h2>
+                <div class="mt-2">
+                    {{ render_chart(audienceAgeBar) }}
+                </div>
+            </div>
+        </div>  
     </div>
+  <!-- MAIN CONTENT -->
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="card bg-base-200 shadow">
-        <div class="card-body p-4">
-            <h2 class="card-title">Distribuição de Views no Dia</h2>
-            <div class="mt-2">
-            {{ render_chart(viewsDistribution) }}
-            </div>
-        </div>
-        </div>
 
-        <div class="card bg-base-200 shadow">
-        <div class="card-body p-4">
-            <h2 class="card-title">Audiência por Gênero (%)</h2>
-            <div class="mt-2">
-            {{ render_chart(audienceGenderDonut) }}
-            </div>
-        </div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="card bg-base-200 shadow">
-        <div class="card-body p-4">
-            <h2 class="card-title">Distribuição por Região</h2>
-            <div class="mt-2">
-            {{ render_chart(audienceRegionBar) }}
-            </div>
-        </div>
-        </div>
-
-        <div class="card bg-base-200 shadow">
-        <div class="card-body p-4">
-            <h2 class="card-title">Distribuição por Faixa Etária</h2>
-            <div class="mt-2">
-            {{ render_chart(audienceAgeBar) }}
-            </div>
-        </div>
-        </div>
-    </div>
 
     </section>
 {% endblock %}
