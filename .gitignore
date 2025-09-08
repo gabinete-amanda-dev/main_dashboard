@@ -5,7 +5,12 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
-/var/
+/var/*
+!/var/.gitkeep
+!/var/**/.gitkeep
+# Keep chrome profile folder structure in repo, but not contents
+!/var/google-chrome/
+!/var/google-chrome/.gitkeep
 /vendor/
 ###< symfony/framework-bundle ###
 
