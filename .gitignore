@@ -14,6 +14,10 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+# Local virtualenvs and FB helper profiles
+.venv311/
+.fb_profile*
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 /.phpunit.cache/

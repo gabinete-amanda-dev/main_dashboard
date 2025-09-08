@@ -1,6 +1,0 @@
-2025/09/02-14:48:05.720 159a50 Creating DB /Users/lucas/Projects/Web/main_dashboard/.fb_profile_sf/Default/IndexedDB/https_www.facebook.com_0.indexeddb.leveldb since it was missing.
-2025/09/02-14:48:05.723 159a50 Reusing MANIFEST /Users/lucas/Projects/Web/main_dashboard/.fb_profile_sf/Default/IndexedDB/https_www.facebook.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/09/02-14:48:06.659 159a4e Level-0 table #5: started
-2025/09/02-14:48:06.661 159a4e Level-0 table #5: 15098 bytes OK
-2025/09/02-14:48:06.662 159a4e Delete type=0 #3
-2025/09/02-14:48:06.663 159a4e Manual compaction at level-0 from '\x00\x07\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x08\x00\x00\x00' @ 0 : 0; will stop at (end)
